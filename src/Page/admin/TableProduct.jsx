@@ -9,7 +9,6 @@ import { Button, Input, Modal, Select, Space, Table, Tooltip, Typography, notifi
 import { textApp } from '../../TextContent/textApp';
 import { deleteData, getData, postData, putData } from '../../api/api';
 import { firebaseImgs } from '../../upImgFirebase/firebaseImgs';
-import ComHeaderAdmin from '../Components/ComHeaderAdmin/ComHeaderAdmin';
 import ComButton from '../Components/ComButton/ComButton';
 import ComUpImg from '../Components/ComUpImg/ComUpImg';
 import ComInput from '../Components/ComInput/ComInput';
@@ -17,6 +16,7 @@ import ComTextArea from '../Components/ComInput/ComTextArea';
 import ComNumber from '../Components/ComInput/ComNumber';
 import ComSelect from '../Components/ComInput/ComSelect';
 import moment from 'moment/moment';
+import ComHeaderStaff from '../Components/ComHeaderStaff/ComHeaderStaff';
 
 
 export default function TableProduct() {
@@ -75,20 +75,6 @@ export default function TableProduct() {
         })
         setIsModalOpenDelete(true);
     };
-    const options = [
-        {
-            label: "Gỗ",
-            value: "Gỗ"
-        },
-        {
-            label: "Nhựa",
-            value: "Nhựa"
-        },
-        {
-            label: "Kim Loại",
-            value: "Kim loại"
-        },
-    ];
 
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -96,7 +82,6 @@ export default function TableProduct() {
     };
     const handleCancelDelete = () => {
         setIsModalOpenDelete(false);
-
     };
     const handleValueChange = (e, value) => {
         setProductPrice(value)
@@ -113,10 +98,12 @@ export default function TableProduct() {
     };
     function formatCurrency(number) {
         // Sử dụng hàm toLocaleString() để định dạng số thành chuỗi với ngăn cách hàng nghìn và mặc định là USD.
-        return number.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'VND',
-        });
+        if (typeof number === "number") {
+            return number.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'VND',
+            });
+        }
     }
     const CreateProductMessenger = yup.object({
 
@@ -126,8 +113,7 @@ export default function TableProduct() {
         reducedPrice: yup.number().min(1, textApp.CreateProduct.message.priceMin).typeError(textApp.CreateProduct.message.price),
         reducedPrice1: yup.string().required(textApp.CreateProduct.message.price).min(1, textApp.CreateProduct.message.priceMin).test('no-dots', textApp.CreateProduct.message.priceDecimal, value => !value.includes('.')),
         quantity: yup.number().min(0, textApp.CreateProduct.message.quantityMin).typeError(textApp.CreateProduct.message.quantity),
-        shape: yup.string().required(textApp.CreateProduct.message.shape),
-        material: yup.array().required(textApp.CreateProduct.message.material),
+
         description: yup.string().required(textApp.CreateProduct.message.description),
     })
 
@@ -211,6 +197,7 @@ export default function TableProduct() {
                                 description:
                                     textApp.TableProduct.Notification.update.description
                             });
+                            setDataRun(!dataRun)
                         })
                         .catch((error) => {
                             api["error"]({
@@ -233,6 +220,7 @@ export default function TableProduct() {
                                 description:
                                     textApp.TableProduct.Notification.change.description
                             });
+
                         })
                         .catch((error) => {
                             console.error("Error fetching items:", error);
@@ -243,6 +231,7 @@ export default function TableProduct() {
                                     textApp.TableProduct.Notification.updateFail.description
                             });
                         });
+                    setDataRun(!dataRun)
                 }
 
             }
@@ -253,7 +242,6 @@ export default function TableProduct() {
         setImages([]);
         setDisabled(false)
         setIsModalOpen(false);
-        setDataRun(!dataRun)
     }
 
     const deleteById = () => {
@@ -284,7 +272,7 @@ export default function TableProduct() {
     }
     useEffect(() => {
         setTimeout(() => {
-            getData('/product', {})
+            getData('/product/staff', {})
                 .then((data) => {
                     setProducts(data?.data?.docs)
                 })
@@ -400,10 +388,8 @@ export default function TableProduct() {
             ),
     });
     const columns = [
-
         {
             title: 'Ảnh sản phẩm',
-
             dataIndex: 'image',
             key: 'img',
             fixed: 'left',
@@ -417,7 +403,7 @@ export default function TableProduct() {
         {
             title: 'Tên sản phẩm',
             dataIndex: 'name',
-            width: 300,
+            width: 200,
             key: 'name',
             fixed: 'left',
 
@@ -454,6 +440,12 @@ export default function TableProduct() {
                     <h1>{formatCurrency(record.reducedPrice)}</h1>
                 </div>
             )
+        }, {
+            title: 'Đã bán',
+            width: 100,
+            dataIndex: 'sold',
+            key: 'sold',
+            sorter: (a, b) => a.sold - b.sold,
         },
         {
             title: 'Số lượng',
@@ -469,7 +461,6 @@ export default function TableProduct() {
             key: 'createdAt',
             sorter: (a, b) => moment(a.createdAt).unix() - moment(b.createdAt).unix(),
             render: (_, record) => (
-
                 <div className="text-sm text-gray-700 line-clamp-4">
                     <p>{moment(record.createdAt).format('l')}</p>
                 </div>
@@ -485,21 +476,6 @@ export default function TableProduct() {
                 <div className="text-sm text-gray-700 line-clamp-4">
                     <p>{moment(record.updatedAt).format('l')}</p>
                 </div>
-            )
-        },
-        {
-            title: 'Chất liệu',
-            dataIndex: 'material',
-            key: 'material',
-            render: (_, record) => (
-
-                <div className="text-sm text-gray-700 line-clamp-4">
-                    <p>{record.material?.[0]}</p>
-                    <p>{record.material?.[1]}</p>
-                    <p>{record.material?.[2]}</p>
-                </div>
-
-
             )
         },
         {
@@ -530,6 +506,7 @@ export default function TableProduct() {
             title: 'Action',
             key: 'operation',
             fixed: 'right',
+            width: 100,
 
             render: (_, record) => (
 
@@ -569,12 +546,11 @@ export default function TableProduct() {
             setValue("material", value, { shouldValidate: true });
 
         }
-        console.log([value]);
     };
     return (
         <>
             {contextHolder}
-            <ComHeaderAdmin />
+            <ComHeaderStaff />
             <div className='flex p-5 justify-center'>
                 <Table
                     rowKey="_id"
@@ -660,61 +636,6 @@ export default function TableProduct() {
                                 </div>
 
 
-                                <div className="">
-                                    <ComSelect
-                                        size={"large"}
-                                        style={{
-                                            width: '100%',
-                                        }}
-                                        label={textApp.CreateProduct.label.material}
-                                        placeholder={textApp.CreateProduct.placeholder.material}
-                                        required
-                                        onChangeValue={handleChange}
-                                        value={selectedMaterials}
-                                        options={options}
-                                        {...register("material")}
-
-                                    />
-                                </div>
-                                <div className="sm:col-span-2">
-                                    <ComInput
-                                        label={textApp.CreateProduct.label.shape}
-                                        placeholder={textApp.CreateProduct.placeholder.shape}
-                                        required
-                                        type="text"
-                                        {...register("shape")}
-                                    />
-                                </div>
-                                {/* <div className="sm:col-span-2">
-                                    <ComInput
-                                        label={textApp.CreateProduct.label.detail}
-                                        placeholder={textApp.CreateProduct.placeholder.detail}
-                                        required
-                                        type="text"
-                                        {...register("detail")}
-                                    />
-                                </div> */}
-                                {/* <div className="sm:col-span-2">
-                                    <ComInput
-                                        label={textApp.CreateProduct.label.models}
-                                        placeholder={textApp.CreateProduct.placeholder.models}
-                                        required
-                                        type="text"
-                                        {...register("models")}
-                                    />
-                                </div>
-    
-                                <div className="sm:col-span-2">
-                                    <ComInput
-                                        label={textApp.CreateProduct.label.accessory}
-                                        placeholder={textApp.CreateProduct.placeholder.accessory}
-                                        required
-                                        type="text"
-                                        {...register("accessory")}
-                                    />
-                                </div> */}
-
-
                                 <div className="sm:col-span-2">
 
                                     <div className="mt-2.5">
@@ -730,7 +651,14 @@ export default function TableProduct() {
                                         />
                                     </div>
                                 </div>
-                                <div className="sm:col-span-1">
+                                <div className="sm:col-span-2">
+                                    <label className="text-paragraph font-bold">
+                                        Hình ảnh
+                                        <span className="text-paragraph font-bold text-error-7 text-red-500">
+                                            *
+                                        </span>
+
+                                    </label>
                                     <ComUpImg onChange={onChange} />
                                 </div>
                             </div>
@@ -744,7 +672,7 @@ export default function TableProduct() {
 
                                 className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
-                                {textApp.common.button.createProduct}
+                                Chỉnh sửa
                             </ComButton>
                         </div>
                     </form>
@@ -759,6 +687,7 @@ export default function TableProduct() {
                 width={500}
                 // style={{ top: 20 }}
                 onCancel={handleCancelDelete}>
+                <div className='text-lg p-6'>Bạn có chắc chắn muốn xóa sản phẩm đã chọn này không?</div>
 
                 <div className='flex'>
                     <ComButton

@@ -1,27 +1,37 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { getData } from "../../../api/api";
-import { ComLink } from "../../Components/ComLink/ComLink"; import { textApp } from "../../../TextContent/textApp";
+import { ComLink } from "../../Components/ComLink/ComLink";
 import images from "../../../img";
+import ComHeader from "../../Components/ComHeader/ComHeader";
+import ComFooter from "../../Components/ComFooter/ComFooter";
+import { Pagination } from "antd";
 
 
-export default function ComProducts({ text, link, getAll }) {
+
+export default function Search() {
+    const { search } = useParams();
     const [products, setProducts] = useState([])
+    const [page, setPage] = useState(1)
+
     useEffect(() => {
-        getData(link)
-            .then((data) => {
-                setProducts(data.data.docs)
+        getData(`/product/search?name=${search}&page=${page}`)
+            .then((product) => {
+                setProducts(product.data)
             })
             .catch((error) => {
-                console.error("Error fetching items:", error);
-            });
-    }, [link]);
-    function formatCurrency(number) {
-        // Sử dụng hàm toLocaleString() để định dạng số thành chuỗi với ngăn cách hàng nghìn và mặc định là USD.
-        return number.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'VND',
-        });
-    }
+                console.log(error);
+            })
+    }, [search,page]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [page]);
+    const onChange = (pageNumber) => {
+        console.log('Page: ', pageNumber);
+        setPage(pageNumber)
+      };
+    console.log(products);
     function discount(initialPrice, discountedPrice) {
         if (initialPrice <= 0 || discountedPrice <= 0) {
             return "Giá không hợp lệ";
@@ -35,14 +45,29 @@ export default function ComProducts({ text, link, getAll }) {
             return discountPercentage.toFixed(0); // Giữ nguyên số thập phân, không rút gọn
         }
     }
+    function formatCurrency(number) {
+        // Sử dụng hàm toLocaleString() để định dạng số thành chuỗi với ngăn cách hàng nghìn và mặc định là USD.
+        return number.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'VND',
+        });
+    }
+    if (products?.products?.length === 0) {
+        return(
+            <>
+            <ComHeader />
+               <p className="text-center"> Không tìm thấy sản phẩm đang tìm kiếm</p>
 
+            </>
+        )
+    }
     return (
         <>
+            <ComHeader />
             <div className="bg-white p-4">
                 <div className=" mx-auto  max-w-2xl px-4 py-4 sm:px-6 sm:py-4  lg:max-w-7xl lg:px-2">
-                    <h2 className="bg-red-500 h-12 flex items-center p-2 text-2xl font-bold tracking-tight text-white mb-4">{text}</h2>
                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                        {products?.map((product, index) => (
+                        {products?.products?.map((product, index) => (
                             index !== 8 ? <ComLink key={index} to={`/product/${product._id}`} className="shadow-md  border-solid border-2 border-white hover:border-zinc-400">
                                 <div className="relative  h-80 overflow-hidden bg-gray-200 xl:aspect-h-8 xl:aspect-w-7 border-solid border-2 border-stone-100">
                                     <img
@@ -61,9 +86,9 @@ export default function ComProducts({ text, link, getAll }) {
                                 </div>
                                 <h3 className="mt-4 text-base h-12 ml-2 mr-2 text-gray-700 line-clamp-2">{product.name}</h3>
                                 <div className="">
-                                        <p className="mt-1 ml-2  text-sm font-medium line-through text-slate-500">{formatCurrency(product.price)}</p>
+                                    <p className="mt-1 ml-2  text-sm font-medium line-through text-slate-500">{formatCurrency(product.price)}</p>
                                     <div className="flex justify-between">
-                                    <p className="ml-2 pb-4 text-2xl font-medium  text-red-600">{formatCurrency(product.reducedPrice)}</p>
+                                        <p className="ml-2 pb-4 text-2xl font-medium  text-red-600">{formatCurrency(product.reducedPrice)}</p>
                                         <p className="mt-1 mr-2  text-sm font-medium ">Đã bán: {(product.sold)}</p>
                                     </div>
                                 </div>
@@ -93,16 +118,12 @@ export default function ComProducts({ text, link, getAll }) {
                                         </div>
                                     </div>
                                 </ComLink>
-
                         ))}
                     </div>
-                    <div className={'flex justify-end mt-4'}>
-                        <ComLink to={getAll} >
-                            {textApp.Home.getAll}
-                        </ComLink>
-                    </div>
+                 <div className="flex justify-end p-4"><Pagination current={page} total={products.totalDocs}  showSizeChanger={false} defaultPageSize={9} onChange={onChange}/></div>
                 </div>
             </div>
+            <ComFooter />
         </>
     )
 }

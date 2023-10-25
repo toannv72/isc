@@ -1,20 +1,14 @@
 import axios from "axios";
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
-
-
 const api = axios.create({
   baseURL: process.env.REACT_APP_BASE_URLS1,
   withCredentials: true,
 });
-// Thêm các headers mặc định nếu cần
-// api.defaults.headers.common["Authorization"] = "Bearer YOUR_ACCESS_TOKEN";
-// Đặt cookies vào tiêu đề yêu cầu (nếu có)
 
 export const getData = async (endpoint, params = {}, headers = {}) => {
   try {
     const response = await api.get(endpoint, { params, headers });
-    return response; // Trả về toàn bộ phản hồi từ API
+    return response; 
   } catch (error) {
     throw error;
   }

@@ -11,8 +11,14 @@ import CreateProduct from "./Page/admin/CreateProduct";
 import Order from "./Page/Authenticator/Order/Order"; 
 import Logout from "./Page/Authenticator/Logout/Logout"; 
 import TableOrder from "./Page/admin/TableOrder"; 
-import Invoice from "./Page/Authenticator/Payment/Invoice"; 
+import Invoice from "./Page/Authenticator/Payment/Invoice";
 
+import TableUser from "./Page/Admin2/TableUser";
+import Dashboard from "./Page/manager/dashboard";
+ 
+
+import ShowAll from "./Page/Authenticator/ShowAll/ShowAll";
+import Search from "./Page/Authenticator/Search/Search";
 export const routers = createBrowserRouter([ 
   { 
     path: "*", 
@@ -37,13 +43,13 @@ export const routers = createBrowserRouter([
   { 
     path: "/product/:slug", 
     element: <Product />, 
-  }, 
+  },
   { 
-    path: "/admin/product/create",
+    path: "/staff/product/create",
     element: <CreateProduct />, 
   }, 
   {
-    path: "/admin/product/table", 
+    path: "/staff/product/table", 
     element: <TableProduct />, 
   }, 
   { 
@@ -54,15 +60,27 @@ export const routers = createBrowserRouter([
     element: <Order />,
   }, 
   {
-    path: "/admin/order",
+    path: "/staff/order",
     element: <TableOrder />,
   },
   {
-    path: "/bill/:id",
-    element: <Order />,
+    path: "/payment/bill/:id",
+    element: <Invoice />,
+  },
+  {
+    path: "/admin/tableUser",
+    element: <TableUser />,
+  },
+  {
+    path: "/manager/dashboard",
+    element: <Dashboard />,
   },
   { 
-    path: "/invoice",
-    element: <Invoice />, 
+    path: "/showAll", 
+    element: <ShowAll/>, 
   }, 
+  { 
+    path: "/search/:search", 
+    element: <Search/>, 
+  },
 ]); 

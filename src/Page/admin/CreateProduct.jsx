@@ -14,6 +14,7 @@ import ComTextArea from '../Components/ComInput/ComTextArea'
 import ComNumber from '../Components/ComInput/ComNumber'
 import { Select, notification } from 'antd'
 import ComSelect from '../Components/ComInput/ComSelect'
+import ComHeaderStaff from '../Components/ComHeaderStaff/ComHeaderStaff'
 
 const options = [
     {
@@ -43,8 +44,7 @@ export default function CreateProduct() {
         reducedPrice: yup.number().min(1, textApp.CreateProduct.message.priceMin).typeError(textApp.CreateProduct.message.price),
         reducedPrice1: yup.string().required(textApp.CreateProduct.message.price).min(1, textApp.CreateProduct.message.priceMin).test('no-dots', textApp.CreateProduct.message.priceDecimal, value => !value.includes('.')),
         quantity: yup.number().min(1, textApp.CreateProduct.message.quantityMin).typeError(textApp.CreateProduct.message.quantity),
-        shape: yup.string().required(textApp.CreateProduct.message.shape),
-        material: yup.array().required(textApp.CreateProduct.message.material),
+    
         description: yup.string().required(textApp.CreateProduct.message.description),
     })
     const createProductRequestDefault = {
@@ -71,11 +71,8 @@ export default function CreateProduct() {
         return typeof number === 'number' && isFinite(number) && Math.floor(number) === number;
     }
     const onSubmit = (data) => {
-        console.log(data);
-        console.log(data.reducedPrice%1000!==0);
-        console.log(data.reducedPrice%1000);
 
-        if (data.price%1000!==0) {
+        if (data.price % 1000 !== 0) {
             api["error"]({
                 message: textApp.CreateProduct.Notification.m7.message,
                 description:
@@ -83,7 +80,7 @@ export default function CreateProduct() {
             });
             return
         }
-        if (data.reducedPrice%1000!==0) {
+        if (data.reducedPrice % 1000 !== 0) {
             api["error"]({
                 message: textApp.CreateProduct.Notification.m8.message,
                 description:
@@ -101,14 +98,6 @@ export default function CreateProduct() {
             return
         }
 
-        if (data.material.length === 0) {
-            api["error"]({
-                message: textApp.CreateProduct.Notification.m4.message,
-                description:
-                    textApp.CreateProduct.Notification.m4.description
-            });
-            return
-        }
         if (image.length === 0) {
             api["error"]({
                 message: textApp.CreateProduct.Notification.m5.message,
@@ -126,7 +115,7 @@ export default function CreateProduct() {
             });
             return
         }
-       
+
         setDisabled(true)
         firebaseImgs(image)
             .then((dataImg) => {
@@ -173,7 +162,7 @@ export default function CreateProduct() {
         // setFileList(data);
     }
     const handleValueChange = (e, value) => {
-       
+
         setValue("price", value, { shouldValidate: true });
     };
 
@@ -192,7 +181,7 @@ export default function CreateProduct() {
     return (
         <>
             {contextHolder}
-            <ComHeaderAdmin />
+            <ComHeaderStaff/>
             <div className="isolate bg-white px-6 py-10 sm:py-10 lg:px-8">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -255,63 +244,7 @@ export default function CreateProduct() {
 
                             </div>
 
-                            {/* <div className="">
-                                <Select
-                                    size={"large"}
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                    mode="multiple"
-                                    placeholder={textApp.CreateProduct.placeholder.material}
-                                    onChange={handleChange}
-                                    options={options}
-                                />
-                            </div> */}
-                            <div className="">
-                                <ComSelect
-                                    size={"large"}
-                                    style={{
-                                        width: '100%',
-                                    }}
-                                    label={textApp.CreateProduct.label.material}
-                                    placeholder={textApp.CreateProduct.placeholder.material}
-                                    required
-                                    onChangeValue={handleValueChangeSelect}
-                                    options={options}
-                                    {...register("material")}
-
-                                />
-                            </div>
-                            <div className="sm:col-span-2">
-                                <ComInput
-                                    label={textApp.CreateProduct.label.shape}
-                                    placeholder={textApp.CreateProduct.placeholder.shape}
-                                    required
-                                    type="text"
-                                    {...register("shape")}
-                                />
-                            </div>
-
-                            {/* <div className="sm:col-span-2">
-                                <ComInput
-                                    label={textApp.CreateProduct.label.models}
-                                    placeholder={textApp.CreateProduct.placeholder.models}
-                                    required
-                                    type="text"
-                                    {...register("models")}
-                                />
-                            </div> */}
-
-                            {/* <div className="sm:col-span-2">
-                                <ComInput
-                                    label={textApp.CreateProduct.label.accessory}
-                                    placeholder={textApp.CreateProduct.placeholder.accessory}
-                                    required
-                                    type="text"
-                                    {...register("accessory")}
-                                />
-                            </div> */}
-
+ 
 
                             <div className="sm:col-span-2">
 
@@ -328,7 +261,14 @@ export default function CreateProduct() {
                                     />
                                 </div>
                             </div>
-                            <div className="sm:col-span-1">
+                            <div className="sm:col-span-2">
+                                <label  className="text-paragraph font-bold">
+                                    Hình ảnh
+                                        <span className="text-paragraph font-bold text-error-7 text-red-500">
+                                            *
+                                        </span>
+                                   
+                                </label>
                                 <ComUpImg onChange={onChange} />
                             </div>
                         </div>

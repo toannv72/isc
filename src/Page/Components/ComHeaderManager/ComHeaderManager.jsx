@@ -1,18 +1,10 @@
-import { Fragment, useEffect, useState } from 'react'
-import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
+import { useEffect, useState } from 'react'
+import { Dialog} from '@headlessui/react'
 import {
   Bars3Icon,
-  ShoppingBagIcon,
   PresentationChartBarIcon,
-
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
   PowerIcon,
-  ClipboardDocumentListIcon,
-  ShoppingCartIcon,
   XMarkIcon,
-  UserIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, } from '@heroicons/react/20/solid'
 import { ComLink } from '../ComLink/ComLink'
@@ -41,7 +33,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function ComHeaderAdmin() {
+export default function ComHeaderManager() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [user, setUser] = useStorage('user', {})
   const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
@@ -53,15 +45,15 @@ export default function ComHeaderAdmin() {
   };
 
   useEffect(() => {
-    if (!(user?._doc?.role === 'admin')) {
+    if (!(user?._doc?.role === 'manager')) {
 
-      navigate('/login')
+      // navigate('/login')
     }
   }, []);
   return (
     <Affix offsetTop={0}>
       <header className="bg-white border-b border-gray-200  ">
-        <nav className="mx-auto flex  items-center justify-between px-6  bg-slate-300" aria-label="Global">
+        <nav className="mx-auto flex  items-center justify-between px-6  bg-teal-100" aria-label="Global">
           <div className="flex ">
             <button
               type="button"
@@ -82,7 +74,7 @@ export default function ComHeaderAdmin() {
           <div className="fixed inset-0 z-10 " />
           <Dialog.Panel className="fixed inset-y-0 left-0 z-10 w-full overflow-y-auto px-0 py-0 sm:max-w-xs sm:ring-1 sm:ring-gray-900/10">
 
-            <Card className="h-[calc(100vh)]  w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 bg-slate-300">
+            <Card className="h-[calc(100vh)]  w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 bg-teal-100">
               <div className="mb-2 p-4">
                 <Typography variant="h5" color="blue-gray">
                   <div className='flex justify-between'>
@@ -100,14 +92,50 @@ export default function ComHeaderAdmin() {
                 </Typography>
               </div>
               <List>
-                <Link  onClick={() => setMobileMenuOpen(false) } to={'/admin/tableUser'} >
-                  <ListItem>
-                    <ListItemPrefix>
-                      <UserIcon  strokeWidth={3} className="h-5 w-5 " />
-                    </ListItemPrefix>
-                    Account
+                <Accordion
+                  open={open === 1}
+                  icon={
+                    <ChevronDownIcon
+                      strokeWidth={2.5}
+                      className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
+                    />
+                  }
+                >
+                  <ListItem className="p-0 " selected={open === 1}>
+                    <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
+                      <ListItemPrefix>
+                        <PresentationChartBarIcon className="h-5 w-5" />
+                      </ListItemPrefix>
+                      <Typography color="blue-gray" className="mr-auto font-normal">
+                        Thống kê
+                      </Typography>
+                    </AccordionHeader>
                   </ListItem>
-                </Link>
+                  <AccordionBody className="py-1">
+                    <List className="p-0">
+                      <Link to={'/manager/dashboard'}>
+                        <ListItem>
+                          <ListItemPrefix>
+                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                          </ListItemPrefix>
+                          Analytics
+                        </ListItem>
+                      </Link>
+                      {/* <ListItem>
+                        <ListItemPrefix>
+                          <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                        </ListItemPrefix>
+                        Reporting
+                      </ListItem>
+                      <ListItem>
+                        <ListItemPrefix>
+                          <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                        </ListItemPrefix>
+                        Projects
+                      </ListItem> */}
+                    </List>
+                  </AccordionBody>
+                </Accordion>
                 <hr className="my-2 border-blue-gray-50" />
 
                 <Link to={routs['/logout'].link}>
