@@ -90,9 +90,9 @@ export default function Payment(props) {
                 <p className="text-2xl">{textApp.Payment.message}</p>
             </div>
 
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col md:flex-row h-[600px]">
 
-                <div className="flex flex-col p-4 md:w-1/3 order-1 md:order-2 mb-4 md:mb-0">
+                <div className="flex flex-col p-4 md:w-1/3 order-1 md:order-2 mb-4 md:mb-0 mx-auto">
                     <FormProvider {...promotion} >
                         <form onSubmit={(onSubmit)} className="text-black text-lg">
                             <h4 className="flex justify-between items-center mb-3 text-gray-600">
@@ -115,11 +115,27 @@ export default function Payment(props) {
                                     <strong>{formatCurrency(totalAmount)}</strong>
                                 </li>
                             </ul>
+
+                            <h4 className="mb-3 text-gray-600 text-lg">{textApp.Payment.payments}</h4>
+                            <div className="space-y-2">
+                                <div className="flex items-center mb-2">
+                                    <input type="radio" defaultChecked className="form-radio" required value="1" />
+                                    <label className="ml-2">{textApp.Payment.cash}</label>
+                                </div>
+                            </div>
+                            <div>
+                                <Button disabled={disabled}
+                                    className="bg-blue-500 h-12 text-white py-3 px-6 rounded-lg w-full "
+                                    type="primary"
+                                    htmlType="submit"
+                                >{textApp.Payment.orderButton}</Button>
+                            </div>
+
                         </form>
                     </FormProvider>
                 </div>
 
-                <div className="flex flex-col p-4 md:w-2/3 md:order-1 order-2 md:pl-8">
+                <div className="flex flex-col p-4 md:w-3/6 md:order-1 order-2 md:pl-8 ml-auto mr-auto">
                     <FormProvider {...methods} >
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <h4 className="mb-6 text-black text-2xl">{textApp.Payment.information.title}</h4>
@@ -169,7 +185,7 @@ export default function Payment(props) {
                                     />
                                 </div>
                             </div>
-                            <h4 className="mb-3 text-gray-600 text-lg">{textApp.Payment.payments}</h4>
+                            {/* <h4 className="mb-3 text-gray-600 text-lg">{textApp.Payment.payments}</h4>
                             <div className="space-y-2">
                                 <div className="flex items-center mb-2">
                                     <input type="radio" defaultChecked className="form-radio" required value="1" />
@@ -182,7 +198,7 @@ export default function Payment(props) {
                                     type="primary"
                                     htmlType="submit"
                                 >{textApp.Payment.orderButton}</Button>
-                            </div>
+                            </div> */}
                         </form>
                     </FormProvider>
                 </div>

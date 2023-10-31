@@ -77,12 +77,12 @@ export default function Product() {
     function formatCurrency(number) {
         // Sử dụng hàm toLocaleString() để định dạng số thành chuỗi với ngăn cách hàng nghìn và mặc định là USD.
         if (typeof number === "number") {
-      
+
             return number.toLocaleString('en-US', {
                 style: 'currency',
                 currency: 'VND',
             });
-          }
+        }
     }
     const onSubmit = (data) => {
 
@@ -145,8 +145,8 @@ export default function Product() {
             {contextHolder}
             <ComHeader dataCart={cart} updateCart={updateCart} />
             <div className="bg-white">
-                <div className="">
-                    <div className="mx-auto max-w-2xl px-4 pb-16 pt-8 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-8">
+                <div className="" style={{backgroundColor:'#f5f5f5'}}>
+                    <div className="mx-auto max-w-2xl px-4 pb-16 pt-8 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-10 lg:pt-8" style={{backgroundColor:'white'}}>
 
                         <div className='product' ><ComImage product={image} /></div>
 
@@ -184,11 +184,18 @@ export default function Product() {
                                 </div>
                             </div> */}
 
-                            <div className='flex pt-2'>Đã bán: <h2 className='text-indigo-600 '> {Product?.sold}</h2>                             </div>
-                            <div className='flex pt-2'>{textApp.Product.page.shape} <h2 className='text-indigo-600 '>{Product?.shape}</h2>                             </div>
-                            <div className='flex pt-2'>{textApp.Product.page.material}<div className='text-indigo-600 '>{Product?.material?.map((e) => ` ${e}`)}</div>
+                            <div className='flex pt-2'>Đã bán: <h2 className='text-indigo-600 '> {Product?.sold}</h2></div>
+                            {/* <div className="py-10 lg:col-span-2 lg:col-start-1   lg:pb-16  lg:pt-6 ">
+                                <h1 style={{fontSize:'25px'}}>Mô tả</h1> 
+                            <pre style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
+                                {Product.description}
+                            </pre>
+                        </div> */}
+
+                            {/* <div className='flex pt-2'>{textApp.Product.page.shape} <h2 className='text-indigo-600 '>{Product?.shape}</h2>                             </div>
+                            <div className='flex pt-2'>{textApp.Product.page.material}<div className='text-indigo-600 '>{Product?.material?.map((e) => ` ${e}`)}</div> */}
                                 {/* {Product?.material?.[1]},{Product?.material?.[2]}. */}
-                            </div>
+                            {/* </div> */}
                             <FormProvider {...methods} >
                                 <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
                                     <div>
@@ -203,33 +210,51 @@ export default function Product() {
                                                 {...register("quantity")}
                                             />
                                             <div className=''> {Product.quantity} sản phẩm có sẵn</div>
-                                            <Button
-                                                type='button'
-                                                onClick={(addToCart)}
-                                                className={`flex h-10 items-center justify-center rounded-md border border-transparent  px-4 py-2 text-base font-medium text-white  focus:outline-none 
-                                                 hover:to-orange-500 hover:from-orange-600 bg-gradient-to-b from-orange-400 to-orange-500`}
-                                            >
-                                                {textApp.Product.button.add}
-                                            </Button>
+
                                         </div>
                                     </div>
+                                    <div style={{ display: 'flex', gap: '20px' }}>
 
-                                    <Button
-                                        disabled={disabled}
-                                        htmlType='submit'
-                                        type="primary"
-                                        className={`mt-10 flex w-full h-12 items-center justify-center rounded-md border border-transparent  px-8 py-3 text-base font-medium text-white ${disabled ? " bg-slate-700" : "hover:to-sky-700 hover:from-sky-800 bg-gradient-to-b from-sky-600 to-sky-700"}  `}
-                                    >
-                                        {textApp.Product.button.pay}
-                                    </Button>
+
+                                        {/* <Button
+                                            type='button'
+                                            onClick={(addToCart)}
+                                            className={`mt-10 flex h-10 items-center justify-center rounded-md border border-transparent  px-4 py-2 text-base font-medium text-white  focus:outline-none 
+                                                 hover:to-orange-500 hover:from-orange-600 bg-gradient-to-b from-orange-400 to-orange-500`}
+                                        >
+                                            {textApp.Product.button.add}
+                                        </Button> */}
+
+                                        <Button
+                                            type='button'
+                                            onClick={(addToCart)}
+                                            className={`mt-10 flex h-10 items-center justify-center rounded-md border border-sky-800 px-4 py-2 text-base font-medium text-sky-800 focus:outline-none
+                                             hover:border-sky-500 hover:text-sky-500 hover:bg-transparent`}
+                                        >
+                                            {textApp.Product.button.add}
+
+                                        </Button>
+
+                                        <Button
+                                            disabled={disabled}
+                                            htmlType='submit'
+                                            type="primary"
+                                            className={`mt-10 flex w-15 h-10 items-center justify-center rounded-md border border-transparent  px-8 py-3 text-base font-medium text-white ${disabled ? " bg-slate-700" : "hover:to-sky-700 hover:from-sky-800 bg-gradient-to-b from-sky-600 to-sky-700"}  `}
+                                        >
+                                            {textApp.Product.button.pay}
+                                        </Button>
+
+                                    </div>
+
 
                                 </form>
                             </FormProvider>
                         </div>
 
                     </div>
-                    <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
-                        <div className="py-10 lg:col-span-2 lg:col-start-1   lg:pb-16  lg:pt-6 ">
+                    <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-5" style={{backgroundColor:'white'}}>
+                    <div className="py-10 lg:col-span-2 lg:col-start-1   lg:pb-5  lg:pt-6 " style={{fontSize:'25px',backgroundColor:'#f5f5f5',textAlign:'center'}}>Mô tả sản pẩm </div> 
+                        <div className="py-10 lg:col-span-2 lg:col-start-1   lg:pb-16  lg:pt-6 " >
                             <pre style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
                                 {Product.description}
                             </pre>

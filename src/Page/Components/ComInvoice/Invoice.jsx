@@ -36,7 +36,9 @@ const InvoicePage = () => {
   };
 
   if (!order) {
-    return <div>Loading...</div>;
+    return <div class="flex items-center justify-center">
+          <img src="https://scontent.xx.fbcdn.net/v/t1.15752-9/387617289_1488249585293161_8412229123543921784_n.png?stp=dst-png_p206x206&_nc_cat=110&ccb=1-7&_nc_sid=510075&_nc_ohc=hHxANJqwuwkAX_sXNHt&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdQeoEZATHmwgJLQhLl8DtJKleoOXNx0srTVU-mC4LAZeQ&oe=65636A95" alt="" />
+        </div>;
   }
 
   return (
@@ -54,7 +56,7 @@ const InvoicePage = () => {
           {order?.products?.map((product, index) => {
             // Sử dụng getProductById để lấy thông tin sản phẩm đầy đủ
             const fullProduct = getProductById(product.product);
-            const materials = fullProduct?.material?.join(', ');
+          //  const materials = fullProduct?.material?.join(', ');
 
             return (
               <div key={index} className="mb-4 flex items-center">
@@ -67,9 +69,9 @@ const InvoicePage = () => {
                   <p>
                     {textApp.OrderHistory.product.price}: {product?.price?.toLocaleString("en-US", { style: "currency", currency: "VND" })}
                   </p>
-                  <p>
+                  {/* <p>
                     {textApp.Product.page.material}: {materials}
-                  </p>
+                  </p> */}
                 </div>
               </div>
             );

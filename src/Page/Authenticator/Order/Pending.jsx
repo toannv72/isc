@@ -2,36 +2,36 @@ import React, { useEffect, useState } from "react";
 import { textApp } from "../../../TextContent/textApp";
 import { getData } from '../../../api/api';
 
-export default function Pending({activeTab}) {
+export default function Pending({ activeTab }) {
   const [order, setOrder] = useState([]);
   const [products, setProducts] = useState([]);
   const [dataRun, setDataRun] = useState(false);
 
   useEffect(() => {
-  
-      getData('/product', {})
-        .then((productData) => {
-       
-            setProducts(productData?.data);
-          
-        })
-        .catch((error) => {
-          console.error("Error fetching products:", error);
-        });
 
-      getData('/order/user/pending', {})
-        .then((orderData) => {
-          setOrder(orderData?.data?.docs);
-    
-        })
-        .catch((error) => {
-          console.error("Error fetching items:", error);
-    
-        });
+    getData('/product', {})
+      .then((productData) => {
+
+        setProducts(productData?.data);
+
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
+
+    getData('/order/user/pending', {})
+      .then((orderData) => {
+        setOrder(orderData?.data?.docs);
+
+      })
+      .catch((error) => {
+        console.error("Error fetching items:", error);
+
+      });
     // }
   }, [activeTab]);
 
-   
+
   const getProductById = (productId) => {
     // Tìm sản phẩm theo ID trong danh sách sản phẩm
     return products?.docs?.find(product => product._id === productId);
@@ -40,20 +40,22 @@ export default function Pending({activeTab}) {
   function formatCurrency(number) {
     // Sử dụng hàm toLocaleString() để định dạng số thành chuỗi với ngăn cách hàng nghìn và mặc định là USD.
     if (typeof number === "number") {
-      
+
       return number.toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'VND',
+        style: 'currency',
+        currency: 'VND',
       });
     }
-}
-  
+  }
+
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4" style={{ backgroundColor: '#f9f9fa' }}>
       <h1 className="text-2xl font-semibold mb-4">{textApp.OrderHistory.title}</h1>
       {order.length === 0 ? (
-        <p>Loading...</p>
+        <div class="flex items-center justify-center">
+          <img src="https://scontent.xx.fbcdn.net/v/t1.15752-9/387617289_1488249585293161_8412229123543921784_n.png?stp=dst-png_p206x206&_nc_cat=110&ccb=1-7&_nc_sid=510075&_nc_ohc=hHxANJqwuwkAX_sXNHt&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdQeoEZATHmwgJLQhLl8DtJKleoOXNx0srTVU-mC4LAZeQ&oe=65636A95" alt="" />
+        </div>
       ) : order.error ? (
         <p>Error: {order.error.message}</p>
       ) : (

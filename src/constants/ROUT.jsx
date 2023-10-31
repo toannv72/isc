@@ -9,4 +9,5 @@ export const routs = {
   "/logout": { name: 'Đăng Xuất', link: '/logout', },
   "/order": { name: 'Đơn hàng', link: '/order', },
   "/showAll": { name: 'Tất cả đơn hàng', link: '/showAll', },
+  "/showAllSold": { name: 'Tất cả đơn hàng bán chạy', link: '/showAllSold', },
 };

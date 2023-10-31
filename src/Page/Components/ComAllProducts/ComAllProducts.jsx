@@ -4,23 +4,12 @@ import { ComLink } from "../ComLink/ComLink";
 import { textApp } from "../../../TextContent/textApp";
 import images from "../../../img";
 import "./ComAllCss.css";
+import { Pagination } from "antd";
 
 export default function ComAllProducts({ text, link, getAll }) {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
-  const productsPerPage = 16;
-  const totalPages = Math.ceil(products.length / productsPerPage);
 
-  const [selectedMaterial, setSelectedMaterial] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const calculateProductRange = () => {
-    const startIndex = (currentPage - 1) * productsPerPage;
-    const endIndex = startIndex + productsPerPage;
-    return filteredProducts.slice(startIndex, endIndex);
-  };
 
   useEffect(() => {
     getData(link)
@@ -48,80 +37,28 @@ export default function ComAllProducts({ text, link, getAll }) {
     return discountPercentage.toFixed(0);
   }
 
-  const filteredProducts = products.filter((product) => {
-    const priceFilter =
-      (!minPrice || product.reducedPrice >= minPrice) &&
-      (!maxPrice || product.reducedPrice <= maxPrice);
+  // Existing states
+  const productsPerPage = 12;
 
-    const materialFilter =
-      !selectedMaterial || product.material+"" === selectedMaterial
+  // Add page change handler
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  }
 
-    const nameFilter =
-      !searchQuery ||
-      product.name.toLowerCase().includes(searchQuery.toLowerCase());
-      console.log("product.material", product.material+"" );
-      console.log("searchQuery", searchQuery );
-    return priceFilter && materialFilter && nameFilter;
-    
-  });
-console.log ("selectedMaterial", selectedMaterial);
-  const productRange = calculateProductRange();
+  // Slice products based on current page
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
   return (
     <div className="bg-white p-4">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-4 lg:max-w-7xl lg:px-8">
-        <h2 className="bg-red-500 h-12 flex items-center p-2 text-2xl font-bold tracking-tight text-white mb-4">
+        <h2 className="bg-sky-600 h-12 flex items-center p-2 text-2xl font-bold tracking-tight text-white mb-4">
           {text}
         </h2>
 
-        {/* Filter and Search Input Fields */}
-        <div className="mx-auto">
-  Tìm kiếm theo
-</div>
-<div className="flex items-center justify-between" style={{ marginBottom: "1rem" }}>
-  <div className="mb-4">
-    <label>Giá từ:</label>
-    <input
-      className="bg-gray-100 border border-gray-400 text-gray-700 text-sm rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-      type="number"
-      placeholder="Min Price"
-      value={minPrice}
-      onChange={(e) => setMinPrice(parseInt(e.target.value, 10))}
-    />
-    <label>đến:</label>
-
-    <input
-      className="bg-gray-100 border border-gray-400 text-gray-700 text-sm rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-      type="number"
-      placeholder="Max Price"
-      value={maxPrice}
-      onChange={(e) => setMaxPrice(parseInt(e.target.value, 10))}
-      />
-  </div>
-  <div className="flex items-center justify-between" style={{ marginBottom: "1rem" }}>
-    <select
-      value={selectedMaterial}
-      onChange={(e) => setSelectedMaterial(e.target.value)}
-    >
-      <option value="">Chất liệu</option>
-      <option value="Gỗ">Gỗ</option>
-      <option value="Nhựa">Nhựa</option>
-      <option value="Kim loại">Kim loại</option>
-    </select>
-  </div>
-  <div className="flex items-center justify-between" style={{ marginBottom: "1rem" }}>
-    <input
-      className="bg-gray-100 border border-gray-400 text-gray-700 text-sm rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-      type="text"
-      placeholder="Tìm kiếm theo tên"
-      value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-    />
-  </div>
-</div>
-
-     
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          {productRange.map((product, index) => (
+          {currentProducts.map((product, index) => (
             <ComLink
               key={index}
               to={`/product/${product._id}`}
@@ -158,23 +95,14 @@ console.log ("selectedMaterial", selectedMaterial);
             </ComLink>
           ))}
         </div>
-        <div>
-        <div className="pagination">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentPage(index + 1)}
-              className={currentPage === index + 1 ? "active" : ""}
-            >
-              {index + 1}
-            </button>
-          ))}
+
+        <div className="flex justify-end p-4">
+        <Pagination
+          current={currentPage}
+          total={products.length}
+          onChange={handlePageChange}
+        />
         </div>
-        <div className="page-info">
-          Page {currentPage} of {totalPages}
-        </div>
-        </div>
-        
       </div>
     </div>
   );

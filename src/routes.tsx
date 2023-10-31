@@ -16,7 +16,7 @@ import Invoice from "./Page/Authenticator/Payment/Invoice";
 import TableUser from "./Page/Admin2/TableUser";
 import Dashboard from "./Page/manager/dashboard";
  
-
+import ShowAllSold from "./Page/Authenticator/ShowAllSold/ShowAllSold";
 import ShowAll from "./Page/Authenticator/ShowAll/ShowAll";
 import Search from "./Page/Authenticator/Search/Search";
 export const routers = createBrowserRouter([ 
@@ -78,6 +78,10 @@ export const routers = createBrowserRouter([
   { 
     path: "/showAll", 
     element: <ShowAll/>, 
+  }, 
+  { 
+    path: "/showAllSold", 
+    element: <ShowAllSold/>, 
   }, 
   { 
     path: "/search/:search", 

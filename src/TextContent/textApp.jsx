@@ -291,6 +291,16 @@ export const textApp = {
         status5:"Trả hàng",
         status6:"Tất cả",
     },
+
+    NoOrderUser:{
+        status: "Chưa mua hàng ",
+        // status1:"processing",
+        // status2:"transporting",
+        // status3:"done",
+        // status4:"cancel",
+        // status5:"return",
+        // status6:"all",
+    },
     value:{
         status: "pending",
         status1:"processing",

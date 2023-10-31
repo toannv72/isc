@@ -22,7 +22,7 @@ export default function Search() {
             .catch((error) => {
                 console.log(error);
             })
-    }, [search,page]);
+    }, [search, page]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -30,7 +30,7 @@ export default function Search() {
     const onChange = (pageNumber) => {
         console.log('Page: ', pageNumber);
         setPage(pageNumber)
-      };
+    };
     console.log(products);
     function discount(initialPrice, discountedPrice) {
         if (initialPrice <= 0 || discountedPrice <= 0) {
@@ -53,10 +53,10 @@ export default function Search() {
         });
     }
     if (products?.products?.length === 0) {
-        return(
+        return (
             <>
-            <ComHeader />
-               <p className="text-center"> Không tìm thấy sản phẩm đang tìm kiếm</p>
+                <ComHeader />
+                <p className="text-center"> Không tìm thấy sản phẩm đang tìm kiếm</p>
 
             </>
         )
@@ -120,7 +120,13 @@ export default function Search() {
                                 </ComLink>
                         ))}
                     </div>
-                 <div className="flex justify-end p-4"><Pagination current={page} total={products.totalDocs}  showSizeChanger={false} defaultPageSize={9} onChange={onChange}/></div>
+                    <div className="flex justify-end p-4">
+                        <Pagination current={page}
+                            total={products.totalDocs}
+                            showSizeChanger={false}
+                            defaultPageSize={9}
+                            onChange={onChange} />
+                    </div>
                 </div>
             </div>
             <ComFooter />

@@ -40,7 +40,7 @@ export default function ComProducts({ text, link, getAll }) {
         <>
             <div className="bg-white p-4">
                 <div className=" mx-auto  max-w-2xl px-4 py-4 sm:px-6 sm:py-4  lg:max-w-7xl lg:px-2">
-                    <h2 className="bg-red-500 h-12 flex items-center p-2 text-2xl font-bold tracking-tight text-white mb-4">{text}</h2>
+                    <h2 className="bg-sky-600 h-12 flex items-center p-2 text-2xl font-bold tracking-tight text-white mb-4">{text}</h2>
                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                         {products?.map((product, index) => (
                             index !== 8 ? <ComLink key={index} to={`/product/${product._id}`} className="shadow-md  border-solid border-2 border-white hover:border-zinc-400">
