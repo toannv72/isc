@@ -68,15 +68,10 @@ export default function Login() {
                 if (data._doc.role==='user') {
                     return navigate('/')
                 }
-                if (data._doc.role==='staff') {
+                if (data._doc.role==='admin') {
                     return navigate('/staff/product/table')
                 }
-                if (data._doc.role==='manager') {
-                    return navigate('/manager')
-                }
-                if (data._doc.role==='admin') {
-                    return navigate('/admin/tableUser')
-                }
+            
             })
             .catch((error) => {
                 console.error("Error fetching items:", error);

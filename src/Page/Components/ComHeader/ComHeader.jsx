@@ -288,7 +288,7 @@ export default function ComHeader({ dataCart, updateCart }) {
                         >
                           <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
-                            {sttLogin?._doc?.role === 'staff' && <Menu.Item >
+                            {sttLogin?._doc?.role === 'admin' && <Menu.Item >
                               {({ active }) => (
                                 <ComLink
                                   to={routs['/createProduct'].link}

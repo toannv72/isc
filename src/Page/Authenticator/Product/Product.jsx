@@ -77,12 +77,12 @@ export default function Product() {
     function formatCurrency(number) {
         // Sử dụng hàm toLocaleString() để định dạng số thành chuỗi với ngăn cách hàng nghìn và mặc định là USD.
         if (typeof number === "number") {
-      
+
             return number.toLocaleString('en-US', {
                 style: 'currency',
                 currency: 'VND',
             });
-          }
+        }
     }
     const onSubmit = (data) => {
 
@@ -161,34 +161,9 @@ export default function Product() {
                                     {Product.reducedPrice && formatCurrency(Product.reducedPrice)}
                                 </p>
                             </div>
-                            {/* Reviews */}
-                            {/* <div className="mt-6">
-                                <h3 className="sr-only">Reviews</h3>
-                                <div className="flex items-center">
-                                    <div className="flex items-center">
-                                        {[0, 1, 2, 3, 4].map((rating) => (
-                                            <StarIcon
-                                                key={rating}
-                                                className={classNames(
-                                                    reviews.average > rating ? 'text-gray-900' : 'text-gray-200',
-                                                    'h-5 w-5 flex-shrink-0'
-                                                )}
-                                                aria-hidden="true"
-                                            />
-                                        ))}
-                                    </div>
-                                    <p className="sr-only">{reviews.average} out of 5 stars</p>
-                                    <a href={reviews.href} className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                                        {reviews.totalCount} reviews
-                                    </a>
-                                </div>
-                            </div> */}
 
                             <div className='flex pt-2'>Đã bán: <h2 className='text-indigo-600 '> {Product?.sold}</h2>                             </div>
-                            <div className='flex pt-2'>{textApp.Product.page.shape} <h2 className='text-indigo-600 '>{Product?.shape}</h2>                             </div>
-                            <div className='flex pt-2'>{textApp.Product.page.material}<div className='text-indigo-600 '>{Product?.material?.map((e) => ` ${e}`)}</div>
-                                {/* {Product?.material?.[1]},{Product?.material?.[2]}. */}
-                            </div>
+                          
                             <FormProvider {...methods} >
                                 <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
                                     <div>
