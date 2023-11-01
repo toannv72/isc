@@ -69,7 +69,6 @@ export default function Payment(props) {
     }
 
     function formatCurrency(number) {
-        // Sử dụng hàm toLocaleString() để định dạng số thành chuỗi với ngăn cách hàng nghìn và mặc định là USD.
         return number
             .toLocaleString('en-US', {
                 style: 'currency',
@@ -116,25 +115,14 @@ export default function Payment(props) {
                                 </li>
                             </ul>
 
-                            <h4 className="mb-3 text-gray-600 text-lg">{textApp.Payment.payments}</h4>
-                            <div className="space-y-2">
-                                <div className="flex items-center mb-2">
-                                    <input type="radio" defaultChecked className="form-radio" required value="1" />
-                                    <label className="ml-2">{textApp.Payment.cash}</label>
-                                </div>
-                            </div>
-                            <div>
-                                <Button disabled={disabled}
-                                    className="bg-blue-500 h-12 text-white py-3 px-6 rounded-lg w-full "
-                                    type="primary"
-                                    htmlType="submit"
-                                >{textApp.Payment.orderButton}</Button>
-                            </div>
+                            
 
                         </form>
                     </FormProvider>
                 </div>
 
+
+                {/* form infomation */}
                 <div className="flex flex-col p-4 md:w-3/6 md:order-1 order-2 md:pl-8 ml-auto mr-auto">
                     <FormProvider {...methods} >
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -185,7 +173,7 @@ export default function Payment(props) {
                                     />
                                 </div>
                             </div>
-                            {/* <h4 className="mb-3 text-gray-600 text-lg">{textApp.Payment.payments}</h4>
+                            <h4 className="mb-3 text-gray-600 text-lg">{textApp.Payment.payments}</h4>
                             <div className="space-y-2">
                                 <div className="flex items-center mb-2">
                                     <input type="radio" defaultChecked className="form-radio" required value="1" />
@@ -198,13 +186,11 @@ export default function Payment(props) {
                                     type="primary"
                                     htmlType="submit"
                                 >{textApp.Payment.orderButton}</Button>
-                            </div> */}
+                            </div>
                         </form>
                     </FormProvider>
                 </div>
             </div>
-
-
             <ComFooter />
         </>
     );
