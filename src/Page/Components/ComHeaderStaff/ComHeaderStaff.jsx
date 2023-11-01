@@ -51,7 +51,7 @@ export default function ComHeaderStaff() {
   };
 
   useEffect(() => {
-    if (!(user?._doc?.role==='staff')) {
+    if (!(user?._doc?.role==='admin')) {
 
         navigate('/login')
     }
@@ -260,27 +260,6 @@ export default function ComHeaderStaff() {
                   </AccordionBody>
                 </Accordion>
                 <hr className="my-2 border-blue-gray-50" />
-                <ListItem>
-                  <ListItemPrefix>
-                    <InboxIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  Inbox
-                  <ListItemSuffix>
-                    <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-                  </ListItemSuffix>
-                </ListItem>
-                <ListItem>
-                  <ListItemPrefix>
-                    <UserCircleIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  Profile
-                </ListItem>
-                <ListItem>
-                  <ListItemPrefix>
-                    <Cog6ToothIcon className="h-5 w-5" />
-                  </ListItemPrefix>
-                  Settings
-                </ListItem>
 
                 <Link to={routs['/logout'].link}>
                   <ListItem>

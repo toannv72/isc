@@ -45,7 +45,7 @@ export default function ComHeaderManager() {
   };
 
   useEffect(() => {
-    if (!(user?._doc?.role === 'manager')) {
+    if (!(user?._doc?.role === 'admin')) {
 
       // navigate('/login')
     }

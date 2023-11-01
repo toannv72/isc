@@ -69,11 +69,9 @@ const InvoicePage = () => {
                       {textApp.OrderHistory.product.quantity} {product?.quantity}
                     </p>
                     <p>
-                      {textApp.OrderHistory.product.price}: {product?.price?.toLocaleString("en-US", { style: "currency", currency: "VND" })}
+                      {textApp.OrderHistory.product.price}{product?.price?.toLocaleString("en-US", { style: "currency", currency: "VND" })}
                     </p>
-                    <p>
-                      {textApp.Product.page.material}: {materials}
-                    </p>
+                    
                   </div>
                 </div>
               );

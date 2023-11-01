@@ -392,6 +392,8 @@ export default function TableProduct() {
             title: 'Ảnh sản phẩm',
             dataIndex: 'image',
             key: 'img',
+            width: 200,
+
             fixed: 'left',
             render: (_, record) => (
 
