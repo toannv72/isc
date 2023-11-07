@@ -19,6 +19,7 @@ import Dashboard from "./Page/manager/dashboard";
 import ShowAllSold from "./Page/Authenticator/ShowAllSold/ShowAllSold";
 import ShowAll from "./Page/Authenticator/ShowAll/ShowAll";
 import Search from "./Page/Authenticator/Search/Search";
+import ProductShow from "./Page/Authenticator/ShowAll/ProductShow";
 export const routers = createBrowserRouter([ 
   { 
     path: "*", 
@@ -82,7 +83,11 @@ export const routers = createBrowserRouter([
   { 
     path: "/showAllSold", 
     element: <ShowAllSold/>, 
-  }, 
+  },
+  { 
+    path: "/products", 
+    element: <ProductShow/>, 
+  },
   { 
     path: "/search/:search", 
     element: <Search/>, 

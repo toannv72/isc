@@ -51,7 +51,7 @@ export default function ComHeaderStaff() {
   };
 
   useEffect(() => {
-    if (!(user?._doc?.role==='admin')) {
+    if (!(user?._doc?.role==='staff')) {
 
         navigate('/login')
     }
@@ -130,7 +130,7 @@ export default function ComHeaderStaff() {
                 </Typography>
               </div>
               <List>
-                <Accordion
+                {/* <Accordion
                   open={open === 1}
                   icon={
                     <ChevronDownIcon
@@ -171,7 +171,8 @@ export default function ComHeaderStaff() {
                       </ListItem>
                     </List>
                   </AccordionBody>
-                </Accordion>
+                </Accordion> */}
+
                 {/* <Accordion
                   open={open === 2}
                   icon={

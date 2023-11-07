@@ -24,6 +24,7 @@ import { useStorage } from "../../../hooks/useLocalStorage";
 const navigation = {
   pages: [
     { name: textApp.Header.home, href: "/", icon: <HomeIcon class="h-6 w-6 text-gray-500" /> },
+    { name: "Sản phẩm", href: "/products",  },
   ],
 
 };

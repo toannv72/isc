@@ -68,8 +68,14 @@ export default function Login() {
                 if (data._doc.role==='user') {
                     return navigate('/')
                 }
-                if (data._doc.role==='admin') {
+                if (data._doc.role==='staff') {
                     return navigate('/staff/product/table')
+                }
+                if (data._doc.role==='manager') {
+                    return navigate('/manager/dashboard')
+                }
+                if (data._doc.role==='admin') {
+                    return navigate('/admin/tableUser')
                 }
             
             })
