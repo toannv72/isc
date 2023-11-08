@@ -78,7 +78,7 @@ export default function Dashboard() {
                         <div className='flex flex-col justify-center  items-center text-center ' >
                             <img className='w-44' src={avatar} alt="img" />
                             <div >
-                                <span>{user.totalUsers}</span>
+                                <span>{user?.totalUsers}</span>
                                 <p>Người dùng</p>
                             </div>
                         </div>

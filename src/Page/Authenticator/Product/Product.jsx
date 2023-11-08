@@ -231,7 +231,7 @@ export default function Product() {
 
                     </div>
                     <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-5" style={{backgroundColor:'white'}}>
-                    <div className="py-10 lg:col-span-2 lg:col-start-1   lg:pb-5  lg:pt-6 " style={{fontSize:'25px',backgroundColor:'#f5f5f5',textAlign:'center'}}>Mô tả sản pẩm </div> 
+                    <div className="py-10 lg:col-span-2 lg:col-start-1   lg:pb-5  lg:pt-6 " style={{fontSize:'25px',backgroundColor:'#f5f5f5',textAlign:'center'}}>Mô tả sản phẩm </div> 
                         <div className="py-10 lg:col-span-2 lg:col-start-1   lg:pb-16  lg:pt-6 " >
                             <pre style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
                                 {Product.description}

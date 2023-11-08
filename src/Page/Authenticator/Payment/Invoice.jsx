@@ -13,7 +13,7 @@ const InvoicePage = () => {
 
   useEffect(() => {
     // Lấy danh sách sản phẩm
-    getData('/product', {})
+    getData('/product/staff', {})
       .then((productData) => {
         setProducts(productData?.data);
       })

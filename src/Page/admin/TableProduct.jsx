@@ -162,14 +162,7 @@ export default function TableProduct() {
             return
         }
 
-        if (data.material.length === 0) {
-            api["error"]({
-                message: textApp.CreateProduct.Notification.m4.message,
-                description:
-                    textApp.CreateProduct.Notification.m4.description
-            });
-            return
-        }
+        
 
 
         if (data.price <= data.reducedPrice) {
